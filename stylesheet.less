@@ -1,0 +1,31 @@
+body{
+  padding: 20px 0px;
+}
+
+.modal-dialog{
+  z-index:2000;
+}
+
+.upvote{
+  line-height:1.5em;
+  margin-right:10px;
+  text-align:center;
+  -webkit-user-select:none;
+  .up,.down{
+    font-size:2em;
+    cursor:pointer;
+    opacity:0.4;
+    &:hover{
+      opacity:1;
+    }
+  }
+  .up{color:rgb(255, 139, 36);}
+  .down{color:rgb(148, 148, 255);}
+  .points{
+    font-size:1.2em;
+  }
+}
+
+.post{
+  .title{font-size:2em;}
+}
