@@ -1,13 +1,17 @@
 <head>
-  <title>Upvote</title>
+  <title>Upvote!</title>
 </head>
 
 <body>
+  {{> body}}
+</body>
+
+<template name='body'>
   <div class="container">
     {{> navbar}}
     {{> content}}
   </div>
-</body>
+</template>
 
 <template name='navbar'>
   <div class="navbar navbar-default" role="navigation">
@@ -19,7 +23,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">UPVOTE!</a>
+        <a class="navbar-brand" href="#">Upvote!</a>
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
@@ -33,20 +37,22 @@
 <template name='content'>
   <div class="jumbotron">
     <h1>Welcome to Upvote!</h1>
-    <h2>The place where everyone can upvote!</h2>
-    <p>Hello HK Web Devs!</p>
+    <h2>The place where everyone can Upvote!</h2>
+    <p>Hello HK Web Devs.</p>
     {{#if loggedIn}}
       {{> submit_post}}
     {{else}}
-      <p class='text-muted'>Please login or register to submit a link</p>
+      <p class='text-muted'>Please login or register to submit a link.</p>
     {{/if}}
   </div>
-  <h1>Best Posts</h1>
-  <hr>
   <div class="posts">
-    {{#each posts}}
-      {{> post}}
-    {{/each}}
+    {{#if loadedPosts}}
+      {{#each posts}}
+        {{> post}}
+      {{/each}}
+    {{else}}
+      {{> spinner}}
+    {{/if}}    
   </div>
 </template>
 

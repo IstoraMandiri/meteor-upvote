@@ -1,10 +1,14 @@
 Posts = new Meteor.Collection 'posts'
 
 if Meteor.isClient
+  
+  Meteor.subscribe 'allPosts', -> Session.set 'loadedPosts', true
 
   Handlebars.registerHelper 'humanDate', (date) -> moment(date).fromNow()
 
-  Template.content.loggedIn = -> Meteor.userId
+  Template.content.helpers
+    loggedIn : -> Meteor.userId
+ 
   
   Template.submit_post.events =
     'submit' : (event, template) -> 
@@ -19,7 +23,9 @@ if Meteor.isClient
 
       template.find('form').reset()
 
-  Template.content.posts = -> Posts.find({},{sort:{points:-1}})
+  Template.content.helpers
+    loadedPosts: -> Session.equals 'loadedPosts', true
+    posts : -> Posts.find({},{sort:{points:-1}})
 
   Template.post.helpers
     isAdmin : -> Meteor.user()?.profile?.isAdmin
@@ -49,4 +55,6 @@ if Meteor.isServer
   Meteor.startup ->
     Meteor.users.update {'emails.0.address':'chris@test.com'},
       $set: {'profile.isAdmin':true}
+
+  Meteor.publish 'allPosts', -> Posts.find({},{sort:{points:-1}})
 
