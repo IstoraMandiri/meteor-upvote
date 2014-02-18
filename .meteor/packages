@@ -10,3 +10,6 @@ preserve-inputs
 coffeescript
 less
 accounts-password
+moment
+bootstrap-3
+accounts-ui-bootstrap-3
