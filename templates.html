@@ -35,10 +35,28 @@
     <h1>Welcome to Upvote!</h1>
     <h2>The place where everyone can upvote!</h2>
     <p>Hello HK Web Devs!</p>
+    {{#if loggedIn}}
+      {{> submit_post}}
+    {{else}}
+      <p class='text-muted'>Please login or register to submit a link</p>
+    {{/if}}
   </div>
   <h1>Best Posts</h1>
   <hr>
   <div class="posts">
-
+    
   </div>
+</template>
+
+<template name='submit_post'>
+  <form class="form-inline" role="form">
+    <div class="form-group">
+      http:// <input type="text" name='url' class="form-control" placeholder="URL">
+    </div>
+    <div class="form-group">
+      <input type="text" name='title' class="form-control" placeholder="Title">
+    </div>
+    </div>
+    <button class="btn btn-primary">Submit Post</button>
+  </form>
 </template>
