@@ -2,6 +2,8 @@ Posts = new Meteor.Collection 'posts'
 
 if Meteor.isClient
 
+  Handlebars.registerHelper 'humanDate', (date) -> moment(date).fromNow()
+
   Template.content.loggedIn = -> Meteor.userId
   
   Template.submit_post.events =
