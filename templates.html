@@ -44,7 +44,9 @@
   <h1>Best Posts</h1>
   <hr>
   <div class="posts">
-    
+    {{#each posts}}
+      {{> post}}
+    {{/each}}
   </div>
 </template>
 
@@ -59,4 +61,24 @@
     </div>
     <button class="btn btn-primary">Submit Post</button>
   </form>
+</template>
+
+<template name='post'>
+  <div class="panel panel-default post">
+    <div class="panel-body">
+      <div class="upvote pull-left">
+        <div class="up">▲</div>
+        <div class="point">{{points}}</div>
+        <div class="down">▼</div>
+      </div>
+      <div class="description pull-left">
+        <div class="title">
+          <a href="{{url}}" target="_blank">{{title}}</a>  
+        </div>
+        <div class="info">
+          Submitted by <strong>{{submitter}}</strong> {{humanDate createdAt}}
+        </div>  
+      </div>
+    </div>
+  </div>
 </template>

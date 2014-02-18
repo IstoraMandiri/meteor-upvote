@@ -16,3 +16,11 @@ if Meteor.isClient
         points: 0
 
       template.find('form').reset()
+
+  Template.content.posts = -> Posts.find({},{sort:{points:-1}})
+
+  Template.post.events = 
+    'click .up, click .down' : (event) ->
+      Posts.update @_id, 
+        $inc:
+          points: if $(event.target).hasClass('up') then 1 else -1
