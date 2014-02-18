@@ -66,18 +66,43 @@
 <template name='post'>
   <div class="panel panel-default post">
     <div class="panel-body">
-      <div class="upvote pull-left">
-        <div class="up">▲</div>
-        <div class="point">{{points}}</div>
-        <div class="down">▼</div>
-      </div>
+      {{#if isAdmin}}
+        <div class="pull-right tools">
+          {{#if editingThisPost}}
+            <button class="btn btn-success stop-edit">Stop</button>
+          {{else}}
+            <button class="btn btn-danger edit">Edit</button>
+          {{/if}}
+        </div>
+      {{/if}}
+      {{#unless editingThisPost}}
+        <div class="upvote pull-left">
+          <div class="up">▲</div>
+          <div class="point">{{points}}</div>
+          <div class="down">▼</div>
+        </div>
+      {{/unless}}
       <div class="description pull-left">
         <div class="title">
-          <a href="{{url}}" target="_blank">{{title}}</a>  
+          {{#if editingThisPost}}
+            <form class="form-inline" role="form">
+              <div class="form-group">
+                <input type="number" name='points' class="form-control points" placeholder="Points" value="{{points}}">
+              </div>          
+              <div class="form-group">
+                <input type="text" name='url' class="form-control" placeholder="URL" value="{{url}}">
+              </div>
+              <div class="form-group">
+                <input type="text" name='title' class="form-control" placeholder="Title" value='{{title}}'>
+              </div>
+            </form>
+          {{else}}
+            <a href="{{url}}" target="_blank">{{title}}</a>  
+          {{/if}}
         </div>
         <div class="info">
           Submitted by <strong>{{submitter}}</strong> {{humanDate createdAt}}
-        </div>  
+        </div>
       </div>
     </div>
   </div>

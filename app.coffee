@@ -21,8 +21,32 @@ if Meteor.isClient
 
   Template.content.posts = -> Posts.find({},{sort:{points:-1}})
 
+  Template.post.helpers
+    isAdmin : -> Meteor.user()?.profile?.isAdmin
+    editingThisPost: -> Session.equals 'editingPost', @_id
+
   Template.post.events = 
     'click .up, click .down' : (event) ->
       Posts.update @_id, 
         $inc:
           points: if $(event.target).hasClass('up') then 1 else -1
+
+    'click .edit' : -> Session.set 'editingPost', @_id
+
+    'click .stop-edit': -> Session.set 'editingPost', null
+
+    'keyup input, change input' : (event) ->
+      value = if $(event.target).attr('type') is 'number' then parseInt($(event.target).val()) else $(event.target).val()
+      update = {} 
+      update[$(event.target).attr('name')] = value
+      Posts.update @_id,
+        $set:update
+           
+
+
+if Meteor.isServer
+
+  Meteor.startup ->
+    Meteor.users.update {'emails.0.address':'chris@test.com'},
+      $set: {'profile.isAdmin':true}
+
